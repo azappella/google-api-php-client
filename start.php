@@ -26,11 +26,11 @@ Laravel\IoC::singleton('google-api-php-client', function()
     $config['oauth2_client_secret'] = Config::get($bundle_prefix.'google.client_secret');
     $config['oauth2_redirect_uri'] = Config::get($bundle_prefix.'google.redirect_uri');
     $config['developer_key'] = Config::get($bundle_prefix.'google.developer_key');
-    $config['access_type'] = Config::get($bundle_prefix.'google.access_type');
     $config['use_objects'] = Config::get($bundle_prefix.'google.use_objects');
     
     $google = new apiClient($config);
     $google->setScopes(Config::get($bundle_prefix.'google.set_scopes'));
+    $google->setAccessType(Config::get($bundle_prefix.'google.access_type'));
     
     return $google;
     
