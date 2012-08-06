@@ -8,13 +8,13 @@
 </head>
 <body>
   <?php if ( Session::has('status') ): ?>
-  <p><?php echo $status ?></p>
+  <p><?php echo Session::get('status'); ?></p>
   <?php endif; ?>
 
   <?php if ( isset($google_auth_url) ) : ?>
   <a href="<?php echo $google_auth_url; ?>">Connect with Google</a>
   <?php else : ?>
-  <a href="<?php echo URL::to('gapi/logout'); ?>">Logout</a>
+  <a href="<?php echo URL::to('google-api/logout'); ?>">Logout</a>
   <?php endif; ?>
   <ul>
   
