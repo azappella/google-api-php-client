@@ -35,6 +35,7 @@ Edit the following in your bundles/google-api-php-client/config/google.php file:
       'client_id' => 'YOUR_CLIENT_ID',
       'client_secret' => 'YOUR_CLIENT_SECRET',
       'redirect_uri' => 'YOUR_REDIRECT_URI',
+      // under Simple API access, create a browser key, and copy/paste: API key
       'developer_key' => 'YOUR_DEVELOPER_KEY',
       // e.g. for Google Books API
       'set_scopes' => array('https://www.googleapis.com/auth/books'), 
