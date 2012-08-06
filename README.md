@@ -14,7 +14,6 @@ Installation
     php artisan bundle:install google-api-php-client
 
 ### Bundle Registration
-
 Add the following to your application/bundles.php file:
 
     'google-api-php-client' => array(
@@ -23,8 +22,7 @@ Add the following to your application/bundles.php file:
       'auto' => true
     ),
 
-Configuration
--------------
+### Configuration
 Edit the following in your bundles/google-api-php-client/config/google.php file:
 
     // Visit https://code.google.com/apis/console to generate your
@@ -145,9 +143,9 @@ Disclaimer: services have not all been tested
   * Webfonts
 
 You can also visit <http://localhost/google-api/> for a list of available 
-Google API services, once you have authorized and authenticated your app. 
+Google API services. 
 
 Examples
 --------
 More detailed examples for each Google API service can be found under 
-bundles/google-api-php-client/google-api-php-client/examples/
+    bundles/google-api-php-client/google-api-php-client/examples/
