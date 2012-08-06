@@ -1,7 +1,6 @@
 Google API PHP Client (Laravel Bundle)
 ======================================
-
-This is a based on the Google API PHP Client hosted at 
+This bundle is based on the Google API PHP Client hosted at 
 <http://code.google.com/p/google-api-php-client/>
 
     The Google API Client Library enables you to work with Google APIs such as 
