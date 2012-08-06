@@ -21,4 +21,3 @@ return array(
   // Returns objects the Google API Service instead of associative arrays
   'use_objects' => true 
 );
-);
