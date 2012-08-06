@@ -57,13 +57,16 @@ Usage example
       {
         $google->authenticate();
         Session::put('token', $google->getAccessToken());
-        return Redirect::to('/')->with('status','Successful Authentication!');
+        return Redirect::to('/')->with('status','You are now successfully authenticated!');
       }
       // if user is authenticated, do something with a Google API service
       if ( Session::has('token') ) 
       {
         $google->setAccessToken(Session::get('token'));
-        return View::make('index');
+        $service = new apiBooksService($google);
+        $optParams = array('filter' => 'free-ebooks');
+        $results = $service->volumes->listVolumes('Henry David Thoreau', $optParams);
+        return View::make('index')->with('results', $results);
       }
       
       // if user is authorized, but token is not set
@@ -84,7 +87,7 @@ Usage example
       if ( Session::has('token') )
       {
         Session::forget('token');
-        return "Successfully logged out!";
+        return Redirect::to('/')->with('status','Successfully logged out!');
       }
     });
 
@@ -144,3 +147,8 @@ Disclaimer: services have not all been tested
 
 You can also visit <http://localhost/google-api/> for a list of available 
 Google API services, once you have authorized and authenticated your app. 
+
+Examples
+--------
+More detailed examples for each Google API service can be found under 
+bundles/google-api-php-client/google-api-php-client/examples/
