@@ -4,7 +4,7 @@
  * @copyright 2012 Suisseo SARL
  * @license http://creativecommons.org/licenses/by-sa/3.0/
  * @package Google API PHP Client (Laravel Bundle)
- * @version 0.1 - 2012-07-31
+ * @version 0.2 - 2013-02-21
  */
 
 require_once __DIR__.'/google-api-php-client.php';
