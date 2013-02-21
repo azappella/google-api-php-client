@@ -10,10 +10,10 @@
 const BUNDLE_NAME = 'google-api-php-client';
  
 Autoloader::map(array(
-    'apiClient' => Bundle::path(BUNDLE_NAME).'google-api-php-client'.DS.'src'.DS.'apiClient.php'
+  'Google_Client' => Bundle::path(BUNDLE_NAME).'google-api-php-client'.DS.'src'.DS.'Google_Client.php',
 ));
 
-Autoloader::directories(array(Bundle::path(BUNDLE_NAME).'google-api-php-client'.DS.'src'.DS.'contrib'.DS));
+// Autoloader::directories(array(Bundle::path(BUNDLE_NAME).'google-api-php-client'.DS.'src'.DS.'contrib'));
 
 Laravel\IoC::singleton('google-api-php-client', function()
 {
@@ -28,9 +28,14 @@ Laravel\IoC::singleton('google-api-php-client', function()
     $config['developer_key'] = Config::get($bundle_prefix.'google.developer_key');
     $config['use_objects'] = Config::get($bundle_prefix.'google.use_objects');
     
-    $google = new apiClient($config);
+    $google = new Google_Client($config);
     $google->setScopes(Config::get($bundle_prefix.'google.set_scopes'));
     $google->setAccessType(Config::get($bundle_prefix.'google.access_type'));
+    
+    // autoload Google API services
+    $classes = Google::services();
+    $mappings = Google::format_mappings($classes);
+    Autoloader::map($mappings);
     
     return $google;
     

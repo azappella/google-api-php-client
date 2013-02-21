@@ -45,7 +45,7 @@ Route::get('(:bundle)/(:any)', function($service)
 {
   $google = IoC::resolve('google-api-php-client');
   
-  $class_name = 'api'.ucfirst($service).'Service';
+  $class_name = 'Google_'.ucfirst($service).'Service';
   $class_file = $class_name . ".php";
   $classes = Google::services();
   
