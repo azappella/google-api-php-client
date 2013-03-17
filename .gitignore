@@ -1,1 +1,3 @@
 config/google.local.php
+*.sublime-project
+*.sublime-workspace
