@@ -60,7 +60,7 @@ Usage example
       if ( Session::has('token') ) 
       {
         $google->setAccessToken(Session::get('token'));
-        $service = new apiBooksService($google);
+        $service = new Google_BooksService($google);
         $optParams = array('filter' => 'free-ebooks');
         $results = $service->volumes->listVolumes('Henry David Thoreau', $optParams);
         return View::make('index')->with('results', $results);
@@ -117,7 +117,7 @@ Usage example
 
 Available Services 
 ------------------
-Disclaimer: services have not all been tested
+NOTE: services have not all been tested
 
   * Adsense
   * Analytics
