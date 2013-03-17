@@ -43,24 +43,6 @@ class Google {
   }
   
   /**
-   * Load the Google API service classes
-   *
-   * @return void
-   */
-  public static function load($classes,$path='')
-  {
-    $path = Bundle::path(BUNDLE_NAME).'google-api-php-client'.DS.'src'.DS.'contrib'.DS;
-    try {
-      // var_dump(get_declared_classes());
-      foreach ($classes as $class) {
-       // include_once $path . $class;
-      }
-    } catch (Exception $e) {
-        echo $e->getMessage(), "\n";
-    } 
-  }
-  
-  /**
    * Return the path of the Google API service class file
    *
    * @param string $class e.g. Google_AdsenseService.php
