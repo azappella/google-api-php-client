@@ -31,6 +31,7 @@ Laravel\IoC::singleton('google-api-php-client', function()
     $google = new Google_Client($config);
     $google->setScopes(Config::get($bundle_prefix.'google.set_scopes'));
     $google->setAccessType(Config::get($bundle_prefix.'google.access_type'));
+    $google->setApprovalPrompt(Config::get($bundle_prefix.'google.approval_prompt'));
     
     // autoload Google API services
     $classes = Google::services();

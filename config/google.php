@@ -19,5 +19,7 @@ return array(
   'set_scopes' => array('https://www.googleapis.com/auth/books'), 
   'access_type' => 'online',
   // Returns objects the Google API Service instead of associative arrays
-  'use_objects' => true 
+  'use_objects' => true,
+  // auto (default) or force. Indicates if the user should be re-prompted for consent.
+  'approval_prompt' => 'auto'
 );
