@@ -26,9 +26,10 @@
  * @param string $title the title of the page
  */
 function printHtmlHeader($title) {
+  $htmlTitle = filter_var($title, FILTER_SANITIZE_SPECIAL_CHARS);
   print '<!DOCTYPE html>' . "\n";
   print '<html>' . "\n";
-  print '<head><title>' . $title . '</title></head>' . "\n";
+  print '<head><title>' . $htmlTitle . '</title></head>' . "\n";
   print '<link rel="stylesheet" href="style.css" type="text/css" />' . "\n";
   print '<body>' . "\n";
 }
@@ -101,7 +102,7 @@ function printListHeader($list_class) {
  * No results line for a list
  */
 function printNoResultForList() {
-  print '<li>No results found<\li>' . "\n";
+  print '<li>No results found</li>' . "\n";
 }
 
 /**
@@ -154,58 +155,3 @@ function printIndex($actions) {
 function actionNameToWords($actionName) {
   return preg_replace('/([[:lower:]])([[:upper:]])/', '$1 $2', $actionName);
 }
-
-/**
- * Prints an error when a paginated report would contain more than the allowed
- * number of results.
- */
-function printPaginationError() {
-  print '<p>The number of results for your query exceeded the maximum allowed'
-      . ' for paginated reports, that is ' . AD_ROW_LIMIT . ' results.</p>';
-  print '<p>Please use the <a href="?action=GenerateReport"> non paginated'
-      . ' report</a> instead.</p>';
-}
-
-/**
- * Genereate and returns the html code for the chart page.
- * @param mixed $data The data contained in the table
- * @param mixed $columns Description of the table columns
- * @param string $type Required chart type
- * @param mixed $options Options for the chart
- * @return string The html code to that draws the chart
- */
-function generateChartHtml($data, $columns, $type, $options) {
-  $columnsHtml = '';
-  foreach ($columns as $column) {
-    $columnsHtml .=
-        'data.addColumn(\'' . $column[0] . '\', \'' . $column[1] . '\');';
-  }
-  $page = <<<CHART
-<html>
-  <head>
-    <title>Pie Chart Example</title>
-    <script type="text/javascript"
-      src='https://www.google.com/jsapi?autoload=
-          {"modules":[{"name":"visualization","version":"1"}]}'>
-    </script>
-  </head>
-  <body>
-    <div id="vis_div" style="width: 600px; height: 400px;"></div>
-    <script type="text/javascript">
-      var data = new google.visualization.DataTable();
-      $columnsHtml
-      data.addRows($data);
-      var wrapper = new google.visualization.ChartWrapper({
-        chartType: '$type',
-        dataTable: data,
-        options: $options,
-        containerId: 'vis_div'
-      });
-      wrapper.draw();
-    </script>
-  </body>
-</html>
-CHART;
-  return $page;
-}
-

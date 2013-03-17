@@ -19,19 +19,22 @@
  * Implements the app execution flow.
  * Please load index.php to get the list of available examples.
  *
+ * @author Sérgio Gomes <sgomes@google.com>
  * @author Silvano Luciani <silvano.luciani@gmail.com>
  */
 
-// Ad client id to use in the example
-define('AD_CLIENT_ID', 'INSERT_AD_CLIENT_ID_HERE');
+// Host ad client ID to use in the examples where needed.
+define('HOST_AD_CLIENT_ID', 'INSERT_HOST_AD_CLIENT_ID_HERE');
+// Publisher account ID to use in the examples where needed.
+define('PUBLISHER_ACCOUNT_ID', 'INSERT_PUBLISHER_ACCOUNT_ID_HERE');
+// Publisher ad client ID to use in the examples where needed.
+define('PUBLISHER_AD_CLIENT_ID', 'INSERT_PUBLISHER_AD_CLIENT_ID_HERE');
 // Max results per page.
-define('AD_MAX_PAGE_SIZE', 50);
-# This is the maximum number of obtainable rows for paged reports.
-define('AD_ROW_LIMIT', 5000);
+define('MAX_PAGE_SIZE', 50);
 
 // Include the dependencies and die if any is not met.
 try {
-  require_once "AdSenseAuth.php";
+  require_once "AdSenseHostAuth.php";
   require_once "BaseExample.php";
   require_once "htmlHelper.php";
 } catch (Exception $e) {
@@ -42,7 +45,7 @@ try {
   // Build the list of supported actions.
   $actions = getSupportedActions();
   // Go through API authentication.
-  $auth = new AdSenseAuth();
+  $auth = new AdSenseHostAuth();
   $auth->authenticate('sample_user');
   // To get rid of the code in the URL after the authentication.
   if (isset($_GET['code'])) {
@@ -51,8 +54,9 @@ try {
   // If the action is set dispatch the action if supported
   if (isset($_GET["action"])) {
     $action = $_GET["action"];
-    if (!in_array($action, $actions))
+    if (!in_array($action, $actions)) {
       die('Unsupported action:' . $action . "\n");
+    }
     // Render the required action.
     require_once 'examples/' . $action . '.php';
     $class = ucfirst($action);
@@ -63,7 +67,7 @@ try {
     printHtmlFooter();
     $auth->refreshToken();
   } else {
-    // Show the list of links to supported actions
+    // Show the list of links to supported actions.
     printHtmlHeader('AdSense Host API PHP usage examples.');
     printIndex($actions);
     printHtmlFooter();
@@ -86,6 +90,7 @@ function getSupportedActions() {
     }
   }
   closedir($dirHandler);
+  asort($actions);
   return $actions;
 }
 

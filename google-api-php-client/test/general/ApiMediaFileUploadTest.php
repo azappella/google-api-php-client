@@ -69,16 +69,16 @@ class ApiMediaFileUploadTest extends BaseTest {
 
   public function testProcessFile() {
     $this->assertEquals(array('postBody' => array('file' => '@/tmp')),
-      Google_MediaFileUpload::processFileUpload('@/tmp'));
+      Google_MediaFileUpload::processFileUpload('@/tmp', false));
 
     $this->assertEquals(array('postBody' => array('file' => '@/tmp')),
-      Google_MediaFileUpload::processFileUpload('/tmp'));
+      Google_MediaFileUpload::processFileUpload('/tmp', false));
 
     $this->assertEquals(array('postBody' => array('file' => '@../tmp')),
-      Google_MediaFileUpload::processFileUpload('../tmp'));
+      Google_MediaFileUpload::processFileUpload('../tmp', false));
 
     $this->assertEquals(array(),
-      Google_MediaFileUpload::processFileUpload(''));
+      Google_MediaFileUpload::processFileUpload('', false));
   }
 
   public function testProcess() {

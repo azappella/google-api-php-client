@@ -16,16 +16,16 @@
  */
 
 /**
- * Include the libraries file for the AdSense service class and the HTML
- * generation functions.
+ * Include the AdSenseHost service class and the HTML generation functions.
  */
-require_once "../../src/contrib/apiAdsensehostService.php";
+require_once "../../src/contrib/Google_AdsensehostService.php";
 require_once "htmlHelper.php";
 
 /**
- * Uses an instance of apiAdsenseService to retrieve the data and renders
+ * Uses an instance of apiAdsensehostService to retrieve the data and renders
  * the screens.
  *
+ * @author Sérgio Gomes <sgomes@google.com>
  * @author Silvano Luciani <silvano.luciani@gmail.com>
  */
 abstract class BaseExample {
@@ -34,10 +34,10 @@ abstract class BaseExample {
 
   /**
    * Inject the dependency.
-   * @param apiAdsensehostService $adSenseHostService an authenticated instance
-   *     of apiAdsensehostService
+   * @param Google_AdsensehostService $adSenseHostService an authenticated
+   *     instance of Google_AdsensehostService
    */
-  public function __construct(apiAdsensehostService $adSenseHostService) {
+  public function __construct(Google_AdsensehostService $adSenseHostService) {
     $this->adSenseHostService = $adSenseHostService;
   }
 
@@ -57,6 +57,15 @@ abstract class BaseExample {
   protected function getSixMonthsBeforeNow() {
     $sixMonthsAgo = new DateTime('-6 months');
     return $sixMonthsAgo->format($this->dateFormat);
+  }
+
+  /**
+   * Returns a unique value to append to various properties in the samples.
+   * @return string unique value
+   */
+  protected function getUniqueName() {
+    $now = new DateTime();
+    return $now->format('YmdHisu');
   }
 
   /**

@@ -28,35 +28,79 @@
   }
 
   /**
-   * The "webproperties" collection of methods.
+   * The "dailyUploads" collection of methods.
    * Typical usage is:
    *  <code>
    *   $analyticsService = new Google_AnalyticsService(...);
-   *   $webproperties = $analyticsService->webproperties;
+   *   $dailyUploads = $analyticsService->dailyUploads;
    *  </code>
    */
-  class Google_ManagementWebpropertiesServiceResource extends Google_ServiceResource {
+  class Google_ManagementDailyUploadsServiceResource extends Google_ServiceResource {
 
 
     /**
-     * Lists web properties to which the user has access. (webproperties.list)
+     * List daily uploads to which the user has access. (dailyUploads.list)
      *
-     * @param string $accountId Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.
+     * @param string $accountId Account Id for the daily uploads to retrieve.
+     * @param string $webPropertyId Web property Id for the daily uploads to retrieve.
+     * @param string $customDataSourceId Custom data source Id for daily uploads to retrieve.
+     * @param string $start_date Start date of the form YYYY-MM-DD.
+     * @param string $end_date End date of the form YYYY-MM-DD.
      * @param array $optParams Optional parameters.
      *
-     * @opt_param int max-results The maximum number of web properties to include in this response.
-     * @opt_param int start-index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return Google_Webproperties
+     * @opt_param int max-results The maximum number of custom data sources to include in this response.
+     * @opt_param int start-index A 1-based index of the first daily upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+     * @return Google_DailyUploads
      */
-    public function listManagementWebproperties($accountId, $optParams = array()) {
-      $params = array('accountId' => $accountId);
+    public function listManagementDailyUploads($accountId, $webPropertyId, $customDataSourceId, $start_date, $end_date, $optParams = array()) {
+      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'customDataSourceId' => $customDataSourceId, 'start-date' => $start_date, 'end-date' => $end_date);
       $params = array_merge($params, $optParams);
       $data = $this->__call('list', array($params));
       if ($this->useObjects()) {
-        return new Google_Webproperties($data);
+        return new Google_DailyUploads($data);
       } else {
         return $data;
       }
+    }
+    /**
+     * Update/Overwrite data for a custom data source. (dailyUploads.upload)
+     *
+     * @param string $accountId Account Id associated with daily upload.
+     * @param string $webPropertyId Web property Id associated with daily upload.
+     * @param string $customDataSourceId Custom data source Id to which the data being uploaded belongs.
+     * @param string $date Date for which data is uploaded. Date should be formatted as YYYY-MM-DD.
+     * @param int $appendNumber Append number for this upload indexed from 1.
+     * @param string $type Type of data for this upload.
+     * @param array $optParams Optional parameters.
+     *
+     * @opt_param bool reset Reset/Overwrite all previous appends for this date and start over with this file as the first upload.
+     * @return Google_DailyUploadAppend
+     */
+    public function upload($accountId, $webPropertyId, $customDataSourceId, $date, $appendNumber, $type, $optParams = array()) {
+      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'customDataSourceId' => $customDataSourceId, 'date' => $date, 'appendNumber' => $appendNumber, 'type' => $type);
+      $params = array_merge($params, $optParams);
+      $data = $this->__call('upload', array($params));
+      if ($this->useObjects()) {
+        return new Google_DailyUploadAppend($data);
+      } else {
+        return $data;
+      }
+    }
+    /**
+     * Delete uploaded data for the given date. (dailyUploads.delete)
+     *
+     * @param string $accountId Account Id associated with daily upload delete.
+     * @param string $webPropertyId Web property Id associated with daily upload delete.
+     * @param string $customDataSourceId Custom data source Id associated with daily upload delete.
+     * @param string $date Date for which data is to be deleted. Date should be formatted as YYYY-MM-DD.
+     * @param string $type Type of data for this delete.
+     * @param array $optParams Optional parameters.
+     */
+    public function delete($accountId, $webPropertyId, $customDataSourceId, $date, $type, $optParams = array()) {
+      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'customDataSourceId' => $customDataSourceId, 'date' => $date, 'type' => $type);
+      $params = array_merge($params, $optParams);
+      $data = $this->__call('delete', array($params));
+      return $data;
     }
   }
   /**
@@ -91,31 +135,66 @@
     }
   }
   /**
-   * The "accounts" collection of methods.
+   * The "profiles" collection of methods.
    * Typical usage is:
    *  <code>
    *   $analyticsService = new Google_AnalyticsService(...);
-   *   $accounts = $analyticsService->accounts;
+   *   $profiles = $analyticsService->profiles;
    *  </code>
    */
-  class Google_ManagementAccountsServiceResource extends Google_ServiceResource {
+  class Google_ManagementProfilesServiceResource extends Google_ServiceResource {
 
 
     /**
-     * Lists all accounts to which the user has access. (accounts.list)
+     * Lists profiles to which the user has access. (profiles.list)
      *
+     * @param string $accountId Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.
+     * @param string $webPropertyId Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.
      * @param array $optParams Optional parameters.
      *
-     * @opt_param int max-results The maximum number of accounts to include in this response.
-     * @opt_param int start-index An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return Google_Accounts
+     * @opt_param int max-results The maximum number of profiles to include in this response.
+     * @opt_param int start-index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+     * @return Google_Profiles
      */
-    public function listManagementAccounts($optParams = array()) {
-      $params = array();
+    public function listManagementProfiles($accountId, $webPropertyId, $optParams = array()) {
+      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId);
       $params = array_merge($params, $optParams);
       $data = $this->__call('list', array($params));
       if ($this->useObjects()) {
-        return new Google_Accounts($data);
+        return new Google_Profiles($data);
+      } else {
+        return $data;
+      }
+    }
+  }
+  /**
+   * The "customDataSources" collection of methods.
+   * Typical usage is:
+   *  <code>
+   *   $analyticsService = new Google_AnalyticsService(...);
+   *   $customDataSources = $analyticsService->customDataSources;
+   *  </code>
+   */
+  class Google_ManagementCustomDataSourcesServiceResource extends Google_ServiceResource {
+
+
+    /**
+     * List custom data sources to which the user has access. (customDataSources.list)
+     *
+     * @param string $accountId Account Id for the custom data sources to retrieve.
+     * @param string $webPropertyId Web property Id for the custom data sources to retrieve.
+     * @param array $optParams Optional parameters.
+     *
+     * @opt_param int max-results The maximum number of custom data sources to include in this response.
+     * @opt_param int start-index A 1-based index of the first custom data source to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+     * @return Google_CustomDataSources
+     */
+    public function listManagementCustomDataSources($accountId, $webPropertyId, $optParams = array()) {
+      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId);
+      $params = array_merge($params, $optParams);
+      $data = $this->__call('list', array($params));
+      if ($this->useObjects()) {
+        return new Google_CustomDataSources($data);
       } else {
         return $data;
       }
@@ -156,33 +235,63 @@
     }
   }
   /**
-   * The "profiles" collection of methods.
+   * The "accounts" collection of methods.
    * Typical usage is:
    *  <code>
    *   $analyticsService = new Google_AnalyticsService(...);
-   *   $profiles = $analyticsService->profiles;
+   *   $accounts = $analyticsService->accounts;
    *  </code>
    */
-  class Google_ManagementProfilesServiceResource extends Google_ServiceResource {
+  class Google_ManagementAccountsServiceResource extends Google_ServiceResource {
 
 
     /**
-     * Lists profiles to which the user has access. (profiles.list)
+     * Lists all accounts to which the user has access. (accounts.list)
      *
-     * @param string $accountId Account ID for the profiles to retrieve. Can either be a specific account ID or '~all', which refers to all the accounts to which the user has access.
-     * @param string $webPropertyId Web property ID for the profiles to retrieve. Can either be a specific web property ID or '~all', which refers to all the web properties to which the user has access.
      * @param array $optParams Optional parameters.
      *
-     * @opt_param int max-results The maximum number of profiles to include in this response.
-     * @opt_param int start-index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
-     * @return Google_Profiles
+     * @opt_param int max-results The maximum number of accounts to include in this response.
+     * @opt_param int start-index An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+     * @return Google_Accounts
      */
-    public function listManagementProfiles($accountId, $webPropertyId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId);
+    public function listManagementAccounts($optParams = array()) {
+      $params = array();
       $params = array_merge($params, $optParams);
       $data = $this->__call('list', array($params));
       if ($this->useObjects()) {
-        return new Google_Profiles($data);
+        return new Google_Accounts($data);
+      } else {
+        return $data;
+      }
+    }
+  }
+  /**
+   * The "webproperties" collection of methods.
+   * Typical usage is:
+   *  <code>
+   *   $analyticsService = new Google_AnalyticsService(...);
+   *   $webproperties = $analyticsService->webproperties;
+   *  </code>
+   */
+  class Google_ManagementWebpropertiesServiceResource extends Google_ServiceResource {
+
+
+    /**
+     * Lists web properties to which the user has access. (webproperties.list)
+     *
+     * @param string $accountId Account ID to retrieve web properties for. Can either be a specific account ID or '~all', which refers to all the accounts that user has access to.
+     * @param array $optParams Optional parameters.
+     *
+     * @opt_param int max-results The maximum number of web properties to include in this response.
+     * @opt_param int start-index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+     * @return Google_Webproperties
+     */
+    public function listManagementWebproperties($accountId, $optParams = array()) {
+      $params = array('accountId' => $accountId);
+      $params = array_merge($params, $optParams);
+      $data = $this->__call('list', array($params));
+      if ($this->useObjects()) {
+        return new Google_Webproperties($data);
       } else {
         return $data;
       }
@@ -289,17 +398,19 @@
  *
  * <p>
  * For more information about this service, see the
- * <a href="http://code.google.com/apis/analytics" target="_blank">API Documentation</a>
+ * <a href="https://developers.google.com/analytics/" target="_blank">API Documentation</a>
  * </p>
  *
  * @author Google, Inc.
  */
 class Google_AnalyticsService extends Google_Service {
-  public $management_webproperties;
+  public $management_dailyUploads;
   public $management_segments;
-  public $management_accounts;
-  public $management_goals;
   public $management_profiles;
+  public $management_customDataSources;
+  public $management_goals;
+  public $management_accounts;
+  public $management_webproperties;
   public $data_mcf;
   public $data_ga;
   /**
@@ -313,13 +424,15 @@ class Google_AnalyticsService extends Google_Service {
     $this->serviceName = 'analytics';
 
     $client->addService($this->serviceName, $this->version);
-    $this->management_webproperties = new Google_ManagementWebpropertiesServiceResource($this, $this->serviceName, 'webproperties', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.webproperties.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties", "response": {"$ref": "Webproperties"}}}}', true));
-    $this->management_segments = new Google_ManagementSegmentsServiceResource($this, $this->serviceName, 'segments', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}}, "response": {"$ref": "Segments"}, "httpMethod": "GET", "path": "management/segments", "id": "analytics.management.segments.list"}}}', true));
-    $this->management_accounts = new Google_ManagementAccountsServiceResource($this, $this->serviceName, 'accounts', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}}, "response": {"$ref": "Accounts"}, "httpMethod": "GET", "path": "management/accounts", "id": "analytics.management.accounts.list"}}}', true));
-    $this->management_goals = new Google_ManagementGoalsServiceResource($this, $this->serviceName, 'goals', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "profileId": {"required": true, "type": "string", "location": "path"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.goals.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals", "response": {"$ref": "Goals"}}}}', true));
-    $this->management_profiles = new Google_ManagementProfilesServiceResource($this, $this->serviceName, 'profiles', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.profiles.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles", "response": {"$ref": "Profiles"}}}}', true));
-    $this->data_mcf = new Google_DataMcfServiceResource($this, $this->serviceName, 'mcf', json_decode('{"methods": {"get": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "sort": {"type": "string", "location": "query"}, "dimensions": {"type": "string", "location": "query"}, "start-date": {"required": true, "type": "string", "location": "query"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "ids": {"required": true, "type": "string", "location": "query"}, "metrics": {"required": true, "type": "string", "location": "query"}, "filters": {"type": "string", "location": "query"}, "end-date": {"required": true, "type": "string", "location": "query"}}, "id": "analytics.data.mcf.get", "httpMethod": "GET", "path": "data/mcf", "response": {"$ref": "McfData"}}}}', true));
-    $this->data_ga = new Google_DataGaServiceResource($this, $this->serviceName, 'ga', json_decode('{"methods": {"get": {"scopes": ["https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "sort": {"type": "string", "location": "query"}, "dimensions": {"type": "string", "location": "query"}, "start-date": {"required": true, "type": "string", "location": "query"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "segment": {"type": "string", "location": "query"}, "ids": {"required": true, "type": "string", "location": "query"}, "metrics": {"required": true, "type": "string", "location": "query"}, "filters": {"type": "string", "location": "query"}, "end-date": {"required": true, "type": "string", "location": "query"}}, "id": "analytics.data.ga.get", "httpMethod": "GET", "path": "data/ga", "response": {"$ref": "GaData"}}}}', true));
+    $this->management_dailyUploads = new Google_ManagementDailyUploadsServiceResource($this, $this->serviceName, 'dailyUploads', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "start-date": {"required": true, "type": "string", "location": "query"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "customDataSourceId": {"required": true, "type": "string", "location": "path"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "end-date": {"required": true, "type": "string", "location": "query"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.dailyUploads.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads", "response": {"$ref": "DailyUploads"}}, "upload": {"scopes": ["https://www.googleapis.com/auth/analytics"], "parameters": {"reset": {"default": "false", "type": "boolean", "location": "query"}, "customDataSourceId": {"required": true, "type": "string", "location": "path"}, "appendNumber": {"format": "int32", "required": true, "maximum": "20", "minimum": "1", "location": "query", "type": "integer"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "date": {"required": true, "type": "string", "location": "path"}, "type": {"required": true, "type": "string", "location": "query", "enum": ["cost"]}, "accountId": {"required": true, "type": "string", "location": "path"}}, "supportsMediaUpload": true, "mediaUpload": {"maxSize": "5MB", "protocols": {"simple": {"path": "/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads", "multipart": true}, "resumable": {"path": "/resumable/upload/analytics/v3/management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads", "multipart": true}}, "accept": ["application/octet-stream"]}, "response": {"$ref": "DailyUploadAppend"}, "httpMethod": "POST", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}/uploads", "id": "analytics.management.dailyUploads.upload"}, "delete": {"scopes": ["https://www.googleapis.com/auth/analytics"], "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/dailyUploads/{date}", "id": "analytics.management.dailyUploads.delete", "parameters": {"date": {"required": true, "type": "string", "location": "path"}, "customDataSourceId": {"required": true, "type": "string", "location": "path"}, "type": {"required": true, "type": "string", "location": "query", "enum": ["cost"]}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "httpMethod": "DELETE"}}}', true));
+    $this->management_segments = new Google_ManagementSegmentsServiceResource($this, $this->serviceName, 'segments', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}}, "response": {"$ref": "Segments"}, "httpMethod": "GET", "path": "management/segments", "id": "analytics.management.segments.list"}}}', true));
+    $this->management_profiles = new Google_ManagementProfilesServiceResource($this, $this->serviceName, 'profiles', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.profiles.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles", "response": {"$ref": "Profiles"}}}}', true));
+    $this->management_customDataSources = new Google_ManagementCustomDataSourcesServiceResource($this, $this->serviceName, 'customDataSources', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.customDataSources.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources", "response": {"$ref": "CustomDataSources"}}}}', true));
+    $this->management_goals = new Google_ManagementGoalsServiceResource($this, $this->serviceName, 'goals', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "profileId": {"required": true, "type": "string", "location": "path"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "webPropertyId": {"required": true, "type": "string", "location": "path"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.goals.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/goals", "response": {"$ref": "Goals"}}}}', true));
+    $this->management_accounts = new Google_ManagementAccountsServiceResource($this, $this->serviceName, 'accounts', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}}, "response": {"$ref": "Accounts"}, "httpMethod": "GET", "path": "management/accounts", "id": "analytics.management.accounts.list"}}}', true));
+    $this->management_webproperties = new Google_ManagementWebpropertiesServiceResource($this, $this->serviceName, 'webproperties', json_decode('{"methods": {"list": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "accountId": {"required": true, "type": "string", "location": "path"}}, "id": "analytics.management.webproperties.list", "httpMethod": "GET", "path": "management/accounts/{accountId}/webproperties", "response": {"$ref": "Webproperties"}}}}', true));
+    $this->data_mcf = new Google_DataMcfServiceResource($this, $this->serviceName, 'mcf', json_decode('{"methods": {"get": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "sort": {"type": "string", "location": "query"}, "dimensions": {"type": "string", "location": "query"}, "start-date": {"required": true, "type": "string", "location": "query"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "ids": {"required": true, "type": "string", "location": "query"}, "metrics": {"required": true, "type": "string", "location": "query"}, "filters": {"type": "string", "location": "query"}, "end-date": {"required": true, "type": "string", "location": "query"}}, "id": "analytics.data.mcf.get", "httpMethod": "GET", "path": "data/mcf", "response": {"$ref": "McfData"}}}}', true));
+    $this->data_ga = new Google_DataGaServiceResource($this, $this->serviceName, 'ga', json_decode('{"methods": {"get": {"scopes": ["https://www.googleapis.com/auth/analytics", "https://www.googleapis.com/auth/analytics.readonly"], "parameters": {"max-results": {"type": "integer", "location": "query", "format": "int32"}, "sort": {"type": "string", "location": "query"}, "dimensions": {"type": "string", "location": "query"}, "start-date": {"required": true, "type": "string", "location": "query"}, "start-index": {"minimum": "1", "type": "integer", "location": "query", "format": "int32"}, "segment": {"type": "string", "location": "query"}, "ids": {"required": true, "type": "string", "location": "query"}, "metrics": {"required": true, "type": "string", "location": "query"}, "filters": {"type": "string", "location": "query"}, "end-date": {"required": true, "type": "string", "location": "query"}}, "id": "analytics.data.ga.get", "httpMethod": "GET", "path": "data/ga", "response": {"$ref": "GaData"}}}}', true));
 
   }
 }
@@ -457,6 +570,426 @@ class Google_Accounts extends Google_Model {
   }
 }
 
+class Google_CustomDataSource extends Google_Model {
+  public $kind;
+  public $description;
+  public $created;
+  public $profilesLinked;
+  public $updated;
+  public $name;
+  protected $__childLinkType = 'Google_CustomDataSourceChildLink';
+  protected $__childLinkDataType = '';
+  public $childLink;
+  public $webPropertyId;
+  protected $__parentLinkType = 'Google_CustomDataSourceParentLink';
+  protected $__parentLinkDataType = '';
+  public $parentLink;
+  public $id;
+  public $selfLink;
+  public $accountId;
+  public function setKind($kind) {
+    $this->kind = $kind;
+  }
+  public function getKind() {
+    return $this->kind;
+  }
+  public function setDescription($description) {
+    $this->description = $description;
+  }
+  public function getDescription() {
+    return $this->description;
+  }
+  public function setCreated($created) {
+    $this->created = $created;
+  }
+  public function getCreated() {
+    return $this->created;
+  }
+  public function setProfilesLinked($profilesLinked) {
+    $this->profilesLinked = $profilesLinked;
+  }
+  public function getProfilesLinked() {
+    return $this->profilesLinked;
+  }
+  public function setUpdated($updated) {
+    $this->updated = $updated;
+  }
+  public function getUpdated() {
+    return $this->updated;
+  }
+  public function setName($name) {
+    $this->name = $name;
+  }
+  public function getName() {
+    return $this->name;
+  }
+  public function setChildLink(Google_CustomDataSourceChildLink $childLink) {
+    $this->childLink = $childLink;
+  }
+  public function getChildLink() {
+    return $this->childLink;
+  }
+  public function setWebPropertyId($webPropertyId) {
+    $this->webPropertyId = $webPropertyId;
+  }
+  public function getWebPropertyId() {
+    return $this->webPropertyId;
+  }
+  public function setParentLink(Google_CustomDataSourceParentLink $parentLink) {
+    $this->parentLink = $parentLink;
+  }
+  public function getParentLink() {
+    return $this->parentLink;
+  }
+  public function setId($id) {
+    $this->id = $id;
+  }
+  public function getId() {
+    return $this->id;
+  }
+  public function setSelfLink($selfLink) {
+    $this->selfLink = $selfLink;
+  }
+  public function getSelfLink() {
+    return $this->selfLink;
+  }
+  public function setAccountId($accountId) {
+    $this->accountId = $accountId;
+  }
+  public function getAccountId() {
+    return $this->accountId;
+  }
+}
+
+class Google_CustomDataSourceChildLink extends Google_Model {
+  public $href;
+  public $type;
+  public function setHref($href) {
+    $this->href = $href;
+  }
+  public function getHref() {
+    return $this->href;
+  }
+  public function setType($type) {
+    $this->type = $type;
+  }
+  public function getType() {
+    return $this->type;
+  }
+}
+
+class Google_CustomDataSourceParentLink extends Google_Model {
+  public $href;
+  public $type;
+  public function setHref($href) {
+    $this->href = $href;
+  }
+  public function getHref() {
+    return $this->href;
+  }
+  public function setType($type) {
+    $this->type = $type;
+  }
+  public function getType() {
+    return $this->type;
+  }
+}
+
+class Google_CustomDataSources extends Google_Model {
+  public $username;
+  public $kind;
+  protected $__itemsType = 'Google_CustomDataSource';
+  protected $__itemsDataType = 'array';
+  public $items;
+  public $itemsPerPage;
+  public $previousLink;
+  public $startIndex;
+  public $nextLink;
+  public $totalResults;
+  public function setUsername($username) {
+    $this->username = $username;
+  }
+  public function getUsername() {
+    return $this->username;
+  }
+  public function setKind($kind) {
+    $this->kind = $kind;
+  }
+  public function getKind() {
+    return $this->kind;
+  }
+  public function setItems(/* array(Google_CustomDataSource) */ $items) {
+    $this->assertIsArray($items, 'Google_CustomDataSource', __METHOD__);
+    $this->items = $items;
+  }
+  public function getItems() {
+    return $this->items;
+  }
+  public function setItemsPerPage($itemsPerPage) {
+    $this->itemsPerPage = $itemsPerPage;
+  }
+  public function getItemsPerPage() {
+    return $this->itemsPerPage;
+  }
+  public function setPreviousLink($previousLink) {
+    $this->previousLink = $previousLink;
+  }
+  public function getPreviousLink() {
+    return $this->previousLink;
+  }
+  public function setStartIndex($startIndex) {
+    $this->startIndex = $startIndex;
+  }
+  public function getStartIndex() {
+    return $this->startIndex;
+  }
+  public function setNextLink($nextLink) {
+    $this->nextLink = $nextLink;
+  }
+  public function getNextLink() {
+    return $this->nextLink;
+  }
+  public function setTotalResults($totalResults) {
+    $this->totalResults = $totalResults;
+  }
+  public function getTotalResults() {
+    return $this->totalResults;
+  }
+}
+
+class Google_DailyUpload extends Google_Model {
+  protected $__recentChangesType = 'Google_DailyUploadRecentChanges';
+  protected $__recentChangesDataType = 'array';
+  public $recentChanges;
+  public $kind;
+  public $modifiedTime;
+  public $appendCount;
+  public $customDataSourceId;
+  public $date;
+  public $webPropertyId;
+  public $createdTime;
+  protected $__parentLinkType = 'Google_DailyUploadParentLink';
+  protected $__parentLinkDataType = '';
+  public $parentLink;
+  public $selfLink;
+  public $accountId;
+  public function setRecentChanges(/* array(Google_DailyUploadRecentChanges) */ $recentChanges) {
+    $this->assertIsArray($recentChanges, 'Google_DailyUploadRecentChanges', __METHOD__);
+    $this->recentChanges = $recentChanges;
+  }
+  public function getRecentChanges() {
+    return $this->recentChanges;
+  }
+  public function setKind($kind) {
+    $this->kind = $kind;
+  }
+  public function getKind() {
+    return $this->kind;
+  }
+  public function setModifiedTime($modifiedTime) {
+    $this->modifiedTime = $modifiedTime;
+  }
+  public function getModifiedTime() {
+    return $this->modifiedTime;
+  }
+  public function setAppendCount($appendCount) {
+    $this->appendCount = $appendCount;
+  }
+  public function getAppendCount() {
+    return $this->appendCount;
+  }
+  public function setCustomDataSourceId($customDataSourceId) {
+    $this->customDataSourceId = $customDataSourceId;
+  }
+  public function getCustomDataSourceId() {
+    return $this->customDataSourceId;
+  }
+  public function setDate($date) {
+    $this->date = $date;
+  }
+  public function getDate() {
+    return $this->date;
+  }
+  public function setWebPropertyId($webPropertyId) {
+    $this->webPropertyId = $webPropertyId;
+  }
+  public function getWebPropertyId() {
+    return $this->webPropertyId;
+  }
+  public function setCreatedTime($createdTime) {
+    $this->createdTime = $createdTime;
+  }
+  public function getCreatedTime() {
+    return $this->createdTime;
+  }
+  public function setParentLink(Google_DailyUploadParentLink $parentLink) {
+    $this->parentLink = $parentLink;
+  }
+  public function getParentLink() {
+    return $this->parentLink;
+  }
+  public function setSelfLink($selfLink) {
+    $this->selfLink = $selfLink;
+  }
+  public function getSelfLink() {
+    return $this->selfLink;
+  }
+  public function setAccountId($accountId) {
+    $this->accountId = $accountId;
+  }
+  public function getAccountId() {
+    return $this->accountId;
+  }
+}
+
+class Google_DailyUploadAppend extends Google_Model {
+  public $kind;
+  public $customDataSourceId;
+  public $appendNumber;
+  public $webPropertyId;
+  public $date;
+  public $nextAppendLink;
+  public $accountId;
+  public function setKind($kind) {
+    $this->kind = $kind;
+  }
+  public function getKind() {
+    return $this->kind;
+  }
+  public function setCustomDataSourceId($customDataSourceId) {
+    $this->customDataSourceId = $customDataSourceId;
+  }
+  public function getCustomDataSourceId() {
+    return $this->customDataSourceId;
+  }
+  public function setAppendNumber($appendNumber) {
+    $this->appendNumber = $appendNumber;
+  }
+  public function getAppendNumber() {
+    return $this->appendNumber;
+  }
+  public function setWebPropertyId($webPropertyId) {
+    $this->webPropertyId = $webPropertyId;
+  }
+  public function getWebPropertyId() {
+    return $this->webPropertyId;
+  }
+  public function setDate($date) {
+    $this->date = $date;
+  }
+  public function getDate() {
+    return $this->date;
+  }
+  public function setNextAppendLink($nextAppendLink) {
+    $this->nextAppendLink = $nextAppendLink;
+  }
+  public function getNextAppendLink() {
+    return $this->nextAppendLink;
+  }
+  public function setAccountId($accountId) {
+    $this->accountId = $accountId;
+  }
+  public function getAccountId() {
+    return $this->accountId;
+  }
+}
+
+class Google_DailyUploadParentLink extends Google_Model {
+  public $href;
+  public $type;
+  public function setHref($href) {
+    $this->href = $href;
+  }
+  public function getHref() {
+    return $this->href;
+  }
+  public function setType($type) {
+    $this->type = $type;
+  }
+  public function getType() {
+    return $this->type;
+  }
+}
+
+class Google_DailyUploadRecentChanges extends Google_Model {
+  public $change;
+  public $time;
+  public function setChange($change) {
+    $this->change = $change;
+  }
+  public function getChange() {
+    return $this->change;
+  }
+  public function setTime($time) {
+    $this->time = $time;
+  }
+  public function getTime() {
+    return $this->time;
+  }
+}
+
+class Google_DailyUploads extends Google_Model {
+  public $username;
+  public $kind;
+  protected $__itemsType = 'Google_DailyUpload';
+  protected $__itemsDataType = 'array';
+  public $items;
+  public $itemsPerPage;
+  public $previousLink;
+  public $startIndex;
+  public $nextLink;
+  public $totalResults;
+  public function setUsername($username) {
+    $this->username = $username;
+  }
+  public function getUsername() {
+    return $this->username;
+  }
+  public function setKind($kind) {
+    $this->kind = $kind;
+  }
+  public function getKind() {
+    return $this->kind;
+  }
+  public function setItems(/* array(Google_DailyUpload) */ $items) {
+    $this->assertIsArray($items, 'Google_DailyUpload', __METHOD__);
+    $this->items = $items;
+  }
+  public function getItems() {
+    return $this->items;
+  }
+  public function setItemsPerPage($itemsPerPage) {
+    $this->itemsPerPage = $itemsPerPage;
+  }
+  public function getItemsPerPage() {
+    return $this->itemsPerPage;
+  }
+  public function setPreviousLink($previousLink) {
+    $this->previousLink = $previousLink;
+  }
+  public function getPreviousLink() {
+    return $this->previousLink;
+  }
+  public function setStartIndex($startIndex) {
+    $this->startIndex = $startIndex;
+  }
+  public function getStartIndex() {
+    return $this->startIndex;
+  }
+  public function setNextLink($nextLink) {
+    $this->nextLink = $nextLink;
+  }
+  public function getNextLink() {
+    return $this->nextLink;
+  }
+  public function setTotalResults($totalResults) {
+    $this->totalResults = $totalResults;
+  }
+  public function getTotalResults() {
+    return $this->totalResults;
+  }
+}
+
 class Google_GaData extends Google_Model {
   public $kind;
   public $rows;
@@ -483,8 +1016,7 @@ class Google_GaData extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setRows(/* array(Google_string) */ $rows) {
-    $this->assertIsArray($rows, 'Google_string', __METHOD__);
+  public function setRows($rows) {
     $this->rows = $rows;
   }
   public function getRows() {
@@ -645,8 +1177,7 @@ class Google_GaDataQuery extends Google_Model {
   public function getMax_results() {
     return $this->max_results;
   }
-  public function setSort(/* array(Google_string) */ $sort) {
-    $this->assertIsArray($sort, 'Google_string', __METHOD__);
+  public function setSort($sort) {
     $this->sort = $sort;
   }
   public function getSort() {
@@ -682,8 +1213,7 @@ class Google_GaDataQuery extends Google_Model {
   public function getIds() {
     return $this->ids;
   }
-  public function setMetrics(/* array(Google_string) */ $metrics) {
-    $this->assertIsArray($metrics, 'Google_string', __METHOD__);
+  public function setMetrics($metrics) {
     $this->metrics = $metrics;
   }
   public function getMetrics() {
@@ -1268,8 +1798,7 @@ class Google_McfDataQuery extends Google_Model {
   public function getMax_results() {
     return $this->max_results;
   }
-  public function setSort(/* array(Google_string) */ $sort) {
-    $this->assertIsArray($sort, 'Google_string', __METHOD__);
+  public function setSort($sort) {
     $this->sort = $sort;
   }
   public function getSort() {
@@ -1305,8 +1834,7 @@ class Google_McfDataQuery extends Google_Model {
   public function getIds() {
     return $this->ids;
   }
-  public function setMetrics(/* array(Google_string) */ $metrics) {
-    $this->assertIsArray($metrics, 'Google_string', __METHOD__);
+  public function setMetrics($metrics) {
     $this->metrics = $metrics;
   }
   public function getMetrics() {
@@ -1372,11 +1900,13 @@ class Google_Profile extends Google_Model {
   public $webPropertyId;
   public $updated;
   public $siteSearchQueryParameters;
+  public $websiteUrl;
   public $currency;
   public $internalWebPropertyId;
   protected $__childLinkType = 'Google_ProfileChildLink';
   protected $__childLinkDataType = '';
   public $childLink;
+  public $eCommerceTracking;
   public $timezone;
   public $siteSearchCategoryParameters;
   protected $__parentLinkType = 'Google_ProfileParentLink';
@@ -1433,6 +1963,12 @@ class Google_Profile extends Google_Model {
   public function getSiteSearchQueryParameters() {
     return $this->siteSearchQueryParameters;
   }
+  public function setWebsiteUrl($websiteUrl) {
+    $this->websiteUrl = $websiteUrl;
+  }
+  public function getWebsiteUrl() {
+    return $this->websiteUrl;
+  }
   public function setCurrency($currency) {
     $this->currency = $currency;
   }
@@ -1450,6 +1986,12 @@ class Google_Profile extends Google_Model {
   }
   public function getChildLink() {
     return $this->childLink;
+  }
+  public function setECommerceTracking($eCommerceTracking) {
+    $this->eCommerceTracking = $eCommerceTracking;
+  }
+  public function getECommerceTracking() {
+    return $this->eCommerceTracking;
   }
   public function setTimezone($timezone) {
     $this->timezone = $timezone;
