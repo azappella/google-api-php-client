@@ -38,7 +38,9 @@ Edit the following in your bundles/google-api-php-client/config/google.php file:
       'set_scopes' => array('https://www.googleapis.com/auth/books'), 
       'access_type' => 'online',
       // Returns objects the Google API Service instead of associative arrays
-      'use_objects' => true 
+      'use_objects' => true,
+      // auto (default) or force. Indicates if the user should be re-prompted for consent.
+      'approval_prompt' => 'auto' 
     );
 
 Usage example
@@ -149,3 +151,4 @@ Examples
 --------
 More detailed examples for each Google API service can be found under 
     bundles/google-api-php-client/google-api-php-client/examples/
+
