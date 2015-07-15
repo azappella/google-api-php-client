@@ -1,6 +1,6 @@
 Google API PHP Client (Laravel Bundle)
 ======================================
-This bundle only works with Laravel 3. If you need to install the google api php client library for laravel versions > 3, use composer instead (see how here: [Issue #4](https://github.com/azappella/google-api-php-client/issues/4)).
+This bundle only works with Laravel 3. If you need to install the google api php client library for laravel versions > 3, use composer to install https://github.com/google/google-api-php-client instead (see how here: [Issue #4](https://github.com/azappella/google-api-php-client/issues/4)).
 
 This bundle is based on the Google API PHP Client hosted at 
 <http://code.google.com/p/google-api-php-client/>
